@@ -33,3 +33,54 @@ FROM
 GROUP BY 
     m.MemberID, m.FullName;
 
+GO
+-- ViewAvailableBooks: Available books grouped by genre, ordered by price
+CREATE VIEW ViewAvailableBooks AS
+SELECT 
+    Genre,
+    Title,
+    Price,
+    LibraryID
+FROM 
+    Books
+WHERE 
+    IsAvailable = 1
+ORDER BY 
+    Genre, 
+	Price ASC;
+
+	GO
+-- ViewLoanStatusSummary: Loan stats (issued, returned, overdue) per library
+CREATE VIEW ViewLoanStatusSummary AS
+SELECT 
+    b.LibraryID,
+    l.Status,
+    COUNT(*) AS LoanCount
+FROM 
+    Loans l
+    JOIN Books b 
+	ON l.BookID = b.BookID
+GROUP BY 
+    b.LibraryID, 
+	l.Status;
+
+
+GO
+
+-- ViewPaymentOverview → Payment info with member, book, and status
+CREATE VIEW ViewPaymentOverview AS
+SELECT 
+    p.PaymentID,
+    m.FullName AS MemberName,
+    b.Title AS BookTitle,
+    p.Amount,
+    p.PaymentDate,
+    l.Status
+FROM 
+    Payments p
+    JOIN Loans l 
+		ON p.LoanID = l.LoanID
+    JOIN Members m 
+		ON l.MemberID = m.MemberID
+    JOIN Books b 
+		ON l.BookID = b.BookID;
