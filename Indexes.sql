@@ -25,3 +25,8 @@ ON Books(Genre);
 -- Non-clustered index on MemberID (for retrieving loan history)
 CREATE NONCLUSTERED INDEX IX_Loan_MemberID
 ON Loans(MemberID);
+
+-- Non-clustered index on Status (for filtering returned/active loans)
+CREATE NONCLUSTERED INDEX IX_Loan_Status
+ON Loans(Status);
+
