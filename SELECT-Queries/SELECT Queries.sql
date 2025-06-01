@@ -243,6 +243,17 @@ WHERE
     l.LoanID IS NULL;
 	
 
+--List books that were never loaned
+SELECT 
+    b.BookID,
+    b.Title
+FROM 
+    Books b
+	LEFT JOIN Loans l 
+		ON b.BookID = l.BookID
+WHERE 
+    l.LoanID IS NULL;
+
 
 
 
