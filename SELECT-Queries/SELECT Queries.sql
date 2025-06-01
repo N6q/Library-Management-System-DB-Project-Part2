@@ -105,6 +105,18 @@ FROM
 		ON r.BookID = b.BookID;
 
 
+--List top 3 books by number of times they were loaned 
+SELECT TOP 3 
+    b.Title,
+    COUNT(*) AS LoanCount
+FROM 
+	Loans l
+	JOIN Books b ON l.BookID = b.BookID
+GROUP BY 
+	b.Title
+ORDER BY 
+	LoanCount DESC;
+
 
 
 	
