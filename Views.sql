@@ -18,4 +18,18 @@ GROUP BY
 HAVING 
     AVG(r.Rating) > 4.5;
 	
+GO
+-- ViewMemberLoanSummary: Member loan count + total fines paid
+CREATE VIEW ViewMemberLoanSummary AS
+SELECT 
+    m.MemberID,
+    m.FullName,
+    COUNT(l.LoanID) AS LoanCount,
+    ISNULL(SUM(p.Amount), 0) AS TotalFinesPaid
+FROM 
+    Members m
+    LEFT JOIN Loans l ON m.MemberID = l.MemberID
+    LEFT JOIN Payments p ON l.LoanID = p.LoanID
+GROUP BY 
+    m.MemberID, m.FullName;
 
