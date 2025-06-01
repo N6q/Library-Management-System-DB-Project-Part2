@@ -123,3 +123,8 @@ BEGIN
     RETURN @LastName + ', ' + @FirstName;
 END;
 
+
+--Reflect: Where would such functions be used in a frontend (e.g., member profile, book search, admin analytics)? 
+--1. Book Details Page: Display average rating next to book title for user reviews or recommendations.
+--2. Search Results: Help users find available copies of a book matching filters (genre, title, library).
+--3. Show library utilization (% of books currently loaned out). Useful for performance insights.
