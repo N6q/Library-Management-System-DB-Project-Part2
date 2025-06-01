@@ -16,3 +16,6 @@ ON Libraries(Location);
 CREATE NONCLUSTERED INDEX IX_Book_LibraryID_ISBN
 ON Books(LibraryID, ISBN);
 
+-- Non-clustered index on Genre (for filtering by genre)
+CREATE NONCLUSTERED INDEX IX_Book_Genre
+ON Books(Genre);
