@@ -271,4 +271,22 @@ FROM
 		ON l.BookID = b.BookID;
 
 
+--List all overdue loans with member and book details
+SELECT 
+    m.FullName AS MemberName,
+    b.Title AS BookTitle,
+    l.LoanDate,
+    l.DueDate
+FROM 
+    Loans l
+    JOIN Members m 
+		ON l.MemberID = m.MemberID
+    JOIN Books b 
+		ON l.BookID = b.BookID
+WHERE 
+    l.ReturnDate IS NULL
+    AND l.DueDate < GETDATE();
+
+
+
 
