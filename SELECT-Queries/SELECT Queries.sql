@@ -146,6 +146,17 @@ WHERE
 	r.BookID = @BookID;
 
 
+--List all staff working in a given library
+SELECT 
+    s.StaffID,
+    s.FullName,
+    s.Position,
+    s.ContactNumber
+FROM 
+    Staff s
+WHERE 
+    s.LibraryID = @LibraryID; --already decleared 
+
 
 
 
