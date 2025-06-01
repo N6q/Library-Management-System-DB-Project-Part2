@@ -15,3 +15,16 @@ WHERE
     l.ReturnDate IS NULL 
     AND l.DueDate < GETDATE();
 
+-- List books not available
+SELECT 
+	Title, 
+	Genre
+FROM 
+	Books
+WHERE 
+	IsAvailable = 'False';
+
+
+
+
+
