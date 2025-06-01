@@ -158,6 +158,19 @@ WHERE
     s.LibraryID = @LibraryID; --already decleared 
 
 
+--Show books whose prices fall within a given range
+DECLARE @MinPrice DECIMAL(10,2) = 5;
+DECLARE @MaxPrice DECIMAL(10,2) = 15;
+
+SELECT 
+    BookID,
+    Title,
+    Price
+FROM 
+    Books
+WHERE 
+    Price BETWEEN @MinPrice AND @MaxPrice;
+
 
 
 
