@@ -172,6 +172,18 @@ WHERE
     Price BETWEEN @MinPrice AND @MaxPrice;
 
 
+--List all currently active loans (not yet returned) with member and book info
+SELECT 
+    m.FullName AS MemberName,
+    b.Title AS BookTitle,
+    l.LoanDate,
+    l.DueDate
+FROM 
+    Loans l
+    JOIN Members m ON l.MemberID = m.MemberID
+    JOIN Books b ON l.BookID = b.BookID
+WHERE 
+    l.ReturnDate IS NULL;
 
 
 	
