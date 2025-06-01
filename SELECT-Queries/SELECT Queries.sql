@@ -186,6 +186,19 @@ WHERE
     l.ReturnDate IS NULL;
 
 
+--List members who have paid any fine
+SELECT DISTINCT 
+    m.MemberID,
+    m.FullName
+FROM 
+    Payments p
+    JOIN Loans l 
+		ON p.LoanID = l.LoanID
+    JOIN Members m 
+		ON l.MemberID = m.MemberID
+WHERE 
+    p.Amount > 0;
+
 	
 
 
