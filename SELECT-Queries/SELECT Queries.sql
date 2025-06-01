@@ -76,6 +76,22 @@ FROM
 WHERE 
 	l.LoanID IS NULL;
 
+--Total fine paid per member
+SELECT 
+    m.MemberID,
+    m.FullName,
+    SUM(p.Amount) AS TotalFinePaid
+FROM 
+	Payments p
+	JOIN Loans l 
+		ON p.LoanID = l.LoanID
+	JOIN Members m 
+		ON l.MemberID = m.MemberID
+GROUP BY 
+	m.MemberID, m.FullName;
+
+
+
 
 
 	
