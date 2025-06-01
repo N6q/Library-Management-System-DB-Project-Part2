@@ -288,5 +288,69 @@ WHERE
     AND l.DueDate < GETDATE();
 
 
+--Show how many times a book has been loaned
+DECLARE @BookID2 INT = 1;
+
+SELECT 
+    b.Title,
+    COUNT(l.LoanID) AS LoanCount
+FROM 
+    Books b
+LEFT JOIN Loans l ON b.BookID = l.BookID
+WHERE 
+    b.BookID = @BookID2
+GROUP BY 
+    b.Title;
+
+
+--Get total fines paid by a member across all loans
+DECLARE @MemberID3 INT = 1;
+
+SELECT 
+    m.FullName,
+    SUM(p.Amount) AS TotalFinesPaid
+FROM 
+    Payments p
+    JOIN Loans l
+		ON p.LoanID = l.LoanID
+    JOIN Members m 
+		ON l.MemberID = m.MemberID
+WHERE 
+    m.MemberID = @MemberID3
+GROUP BY 
+    m.FullName;
+
+
+--Show count of available and unavailable books in a library
+DECLARE @LibraryID2 INT = 1;
+
+SELECT 
+    b.IsAvailable,
+    COUNT(*) AS BookCount
+FROM 
+    Books b
+WHERE 
+    b.LibraryID = @LibraryID2
+GROUP BY 
+    b.IsAvailable;
+
+
+--Return books with more than 5 reviews and average rating > 4.5
+SELECT 
+    b.Title,
+    COUNT(r.ReviewID) AS ReviewCount,
+    AVG(r.Rating) AS AverageRating
+FROM 
+    Reviews r
+    JOIN Books b
+		ON r.BookID = b.BookID
+GROUP BY 
+    b.Title
+HAVING 
+    COUNT(r.ReviewID) > 5
+    AND AVG(r.Rating) > 4.5;
+
+
+
 
 
