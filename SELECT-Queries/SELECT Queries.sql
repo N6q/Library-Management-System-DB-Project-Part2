@@ -15,6 +15,7 @@ WHERE
     l.ReturnDate IS NULL 
     AND l.DueDate < GETDATE();
 
+
 -- List books not available
 SELECT 
 	Title, 
@@ -36,6 +37,24 @@ GROUP BY
 	m.FullName
 HAVING 
 	COUNT(*) > 2;
+
+--Show average rating per book
+SELECT 
+    b.Title,
+    AVG(r.Rating) AS AverageRating
+FROM 
+	Reviews r
+	JOIN Books b 
+		ON r.BookID = b.BookID
+WHERE 
+	b.BookID = 1 --average for the first book Remove this to make it for all books
+GROUP BY 
+	b.Title;
+
+
+ 
+
+
 
 	
 
