@@ -30,3 +30,6 @@ ON Loans(MemberID);
 CREATE NONCLUSTERED INDEX IX_Loan_Status
 ON Loans(Status);
 
+-- Composite non-clustered index on BookID, LoanDate, ReturnDate (for overdue checks)
+CREATE NONCLUSTERED INDEX IX_Loan_Book_LoanDate_ReturnDate
+ON Loans(BookID, LoanDate, ReturnDate);
