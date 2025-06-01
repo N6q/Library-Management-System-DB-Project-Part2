@@ -231,6 +231,16 @@ FROM
 WHERE 
     l.MemberID = @MemberID2;
 
+--List all members who have never borrowed any book
+SELECT 
+    m.MemberID,
+    m.FullName
+FROM 
+    Members m
+	LEFT JOIN Loans l 
+		ON m.MemberID = l.MemberID
+WHERE 
+    l.LoanID IS NULL;
 	
 
 
