@@ -19,3 +19,9 @@ ON Books(LibraryID, ISBN);
 -- Non-clustered index on Genre (for filtering by genre)
 CREATE NONCLUSTERED INDEX IX_Book_Genre
 ON Books(Genre);
+
+
+-----------------Loan Table-----------------------
+-- Non-clustered index on MemberID (for retrieving loan history)
+CREATE NONCLUSTERED INDEX IX_Loan_MemberID
+ON Loans(MemberID);
