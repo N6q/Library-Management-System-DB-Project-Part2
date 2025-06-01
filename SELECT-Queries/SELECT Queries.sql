@@ -51,6 +51,18 @@ WHERE
 GROUP BY 
 	b.Title;
 
+--Count books by genre 
+DECLARE @LibraryID INT = 1; -- i wanr to check in muscat branch library 
+
+SELECT 
+    Genre,
+    COUNT(*) AS BookCount
+FROM 
+	Books
+WHERE 
+	LibraryID = @LibraryID
+GROUP BY 
+	Genre;
 
  
 
