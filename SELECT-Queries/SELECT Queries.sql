@@ -52,7 +52,7 @@ GROUP BY
 	b.Title;
 
 --Count books by genre 
-DECLARE @LibraryID INT = 1; -- i wanr to check in muscat branch library 
+DECLARE @LibraryID INT = 1; -- i want to check muscat branch library 
 
 SELECT 
     Genre,
@@ -116,6 +116,21 @@ GROUP BY
 	b.Title
 ORDER BY 
 	LoanCount DESC;
+
+--Retrieve full loan history of a specific member including book title, loan & return dates 
+DECLARE @MemberID INT = 1;
+SELECT 
+    b.Title,
+    l.LoanDate,
+    l.ReturnDate
+FROM 
+	Loans l
+	JOIN Books b 
+		ON l.BookID = b.BookID
+WHERE l.MemberID = @MemberID;
+
+
+
 
 
 
