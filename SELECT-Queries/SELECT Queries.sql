@@ -199,6 +199,19 @@ FROM
 WHERE 
     p.Amount > 0;
 
+
+--List books that have never been reviewed
+SELECT 
+    b.BookID,
+    b.Title
+FROM 
+    Books b
+	LEFT JOIN Reviews r 
+		ON b.BookID = r.BookID
+WHERE 
+    r.ReviewID IS NULL;
+
+
 	
 
 
