@@ -91,6 +91,19 @@ GROUP BY
 	m.MemberID, m.FullName;
 
 
+--Reviews with member and book info  
+SELECT 
+    m.FullName AS MemberName,
+    b.Title AS BookTitle,
+    r.Rating,
+    r.Comments
+FROM 
+	Reviews r
+	JOIN Members m 
+		ON r.MemberID = m.MemberID
+	JOIN Books b 
+		ON r.BookID = b.BookID;
+
 
 
 
