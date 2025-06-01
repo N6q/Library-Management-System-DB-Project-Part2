@@ -212,6 +212,25 @@ WHERE
     r.ReviewID IS NULL;
 
 
+--Show a member’s loan history with book titles and loan status
+DECLARE @MemberID2 INT = 1;
+
+SELECT 
+    b.Title,
+    l.LoanDate,
+    l.ReturnDate,
+    CASE 
+        WHEN l.ReturnDate IS NULL 
+		THEN 'Active'
+        ELSE 'Returned'
+    END AS LoanStatus
+FROM 
+    Loans l
+    JOIN Books b 
+		ON l.BookID = b.BookID
+WHERE 
+    l.MemberID = @MemberID2;
+
 	
 
 
