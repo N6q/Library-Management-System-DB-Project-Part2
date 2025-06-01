@@ -119,6 +119,7 @@ ORDER BY
 
 --Retrieve full loan history of a specific member including book title, loan & return dates 
 DECLARE @MemberID INT = 1;
+
 SELECT 
     b.Title,
     l.LoanDate,
@@ -128,6 +129,21 @@ FROM
 	JOIN Books b 
 		ON l.BookID = b.BookID
 WHERE l.MemberID = @MemberID;
+
+
+--Show all reviews for a book with member name and comments
+DECLARE @BookID INT = 1;
+
+SELECT 
+    m.FullName AS MemberName,
+    r.Rating,
+    r.Comments
+FROM 
+	Reviews r
+	JOIN Members m 
+		ON r.MemberID = m.MemberID
+WHERE 
+	r.BookID = @BookID;
 
 
 
