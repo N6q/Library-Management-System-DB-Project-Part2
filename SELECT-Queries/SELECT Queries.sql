@@ -255,6 +255,20 @@ WHERE
     l.LoanID IS NULL;
 
 
+--List all payments with member name and book title
+SELECT 
+    m.FullName AS MemberName,
+    b.Title AS BookTitle,
+    p.PaymentDate,
+    p.Amount
+FROM 
+    Payments p
+    JOIN Loans l 
+		ON p.LoanID = l.LoanID
+    JOIN Members m 
+		ON l.MemberID = m.MemberID
+    JOIN Books b 
+		ON l.BookID = b.BookID;
 
 
 
