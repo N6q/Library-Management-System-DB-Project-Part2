@@ -24,6 +24,21 @@ FROM
 WHERE 
 	IsAvailable = 'False';
 
+--Members who borrowed >2 books 
+SELECT 
+    m.FullName AS MemberName,
+    COUNT(*) AS TotalBookBorrow    
+FROM 
+    Members m
+	JOIN Loans l
+		ON m.MemberID = l.MemberID
+GROUP BY 
+	m.FullName
+HAVING 
+	COUNT(*) > 2;
+
+	
+
 
 
 
