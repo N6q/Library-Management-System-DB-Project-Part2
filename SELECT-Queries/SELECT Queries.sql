@@ -65,6 +65,16 @@ GROUP BY
 	Genre;
 
  
+ -- List members with no loans 
+SELECT 
+	m.MemberID, 
+	m.FullName
+FROM 
+	Members m
+	LEFT JOIN Loans l 
+		ON m.MemberID = l.MemberID
+WHERE 
+	l.LoanID IS NULL;
 
 
 
