@@ -90,6 +90,25 @@ FROM Books b
 GROUP BY b.LibraryID, 
 		FORMAT(l.LoanDate, 'yyyy-MM');
 
+-- ViewLibraryOccupancyDashboard → Shows total books, issued books, available books, and occupancy rate per library
+GO
+CREATE VIEW ViewLibraryOccupancyDashboard AS
+SELECT 
+    b.LibraryID,
+    COUNT(b.BookID) AS TotalBooks,
+    COUNT(CASE WHEN l.ReturnDate IS NULL THEN 1 END) AS IssuedBooks,
+    COUNT(CASE WHEN l.ReturnDate IS NOT NULL OR l.LoanID IS NULL THEN 1 END) AS AvailableBooks,
+    ROUND(
+        COUNT(CASE WHEN l.ReturnDate IS NULL THEN 1 END) * 100.0 / NULLIF(COUNT(b.BookID), 0), 2
+    ) AS OccupancyRate
+FROM Books b
+	LEFT JOIN Loans l 
+		ON b.BookID = l.BookID
+GROUP BY b.LibraryID;
+
+GO
+
+SELECT * FROM ViewLibraryOccupancyDashboard;
 ----------------- Members with loans but no fine-------------
 SELECT 
     m.MemberID,
