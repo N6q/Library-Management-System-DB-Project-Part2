@@ -10,22 +10,41 @@ BEGIN
 END;
 GO
 
--- trg_CalculateLibraryRevenue: After new payment → update library revenue
+--Make a new table to calculate the total revenur
+CREATE TABLE LibraryRevenue (
+    LibraryID INT PRIMARY KEY,
+    TotalRevenue DECIMAL(10, 2) DEFAULT 0
+);
+
+--Initialize with existing library IDs
+INSERT INTO LibraryRevenue (LibraryID, TotalRevenue)
+SELECT LibraryID, 0 FROM Libraries;
+
+GO
+-- trg_CalculateLibraryRevenue: After new payment → update total revenue in separate table
 CREATE TRIGGER trg_CalculateLibraryRevenue
 ON Payments
 AFTER INSERT
 AS
 BEGIN
-    UPDATE l
-    SET Revenue = ISNULL(Revenue, 0) + i.Amount
-    FROM Libraries l
-    JOIN Books b 
-		ON l.LibraryID = b.LibraryID
-    JOIN Loans lo 
-		ON b.BookID = lo.BookID
-    JOIN INSERTED i 
-		ON lo.LoanID = i.LoanID;
+    -- Update the total revenue for each affected library
+    UPDATE lr
+    SET lr.TotalRevenue = (
+        SELECT SUM(p.Amount)
+        FROM Payments p
+        JOIN Loans l ON p.LoanID = l.LoanID
+        JOIN Books b ON l.BookID = b.BookID
+        WHERE b.LibraryID = lr.LibraryID
+    )
+    FROM LibraryRevenue lr
+    WHERE lr.LibraryID IN (
+        SELECT DISTINCT b.LibraryID
+        FROM inserted i
+        JOIN Loans l ON i.LoanID = l.LoanID
+        JOIN Books b ON l.BookID = b.BookID
+    );
 END;
+
 GO
 
 -- trg_LoanDateValidation: Prevents invalid return dates on insert
